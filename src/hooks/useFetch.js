@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const useFetch = (url) => {
+
+  const isMounted = useRef(true);
+
   const [state, setState] = useState({
     loading: true,
     error: null,
@@ -8,15 +11,34 @@ export const useFetch = (url) => {
   });
 
   useEffect(() => {
+  
+    return () => {
+      isMounted.current = false;
+      console.log('useEffect component has been desmounted')
+    }
+  }, [])
+
+  useEffect(() => {
+
     fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
-        setState({
-          loading: false,
-          error: null,
-          data,
-        });
+
+        setTimeout(() => {
+          
+          { 
+            isMounted.current 
+            &&            
+            setState({
+              loading: false,
+              error: null,
+              data,
+            });
+          }  
+        }, 1000);
+
       });
+
   }, [url]);
 
   return state;

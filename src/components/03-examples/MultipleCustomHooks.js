@@ -2,16 +2,23 @@ import React from "react";
 import { useCounter } from "../../hooks/useCounter";
 import { useFetch } from "../../hooks/useFetch";
 
-import "../02-useEffect/effects.css";
+import "../../styles.css";
 
 export const MultipleCustomHooks = () => {
 
   const {counter, increment} = useCounter(1);
 
-  const { loading, data } = useFetch(`https://breakingbadapi.com/api/quotes/${ counter }`);
-
+  
+  let URL = `https://breakingbadapi.com/api/quotes/${ counter }`
+  
+  const { loading, data } = useFetch(URL);
+  
   const { author, quote } = !!data && data[0];
-
+  
+  const handleRandom = () => {
+    
+  };
+  
   return (
     <div>
       <h1>BreakingBad Quotes</h1>
@@ -33,6 +40,12 @@ export const MultipleCustomHooks = () => {
         className="btn btn-outline-primary" 
         onClick={ increment }>
         Next Quote
+      </button>
+
+      <button 
+        className="btn btn-outline-primary m-5" 
+        onClick={ handleRandom }>
+        Random Quote
       </button>
 
     </div>
