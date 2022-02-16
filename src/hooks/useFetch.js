@@ -24,18 +24,13 @@ export const useFetch = (url) => {
       .then((resp) => resp.json())
       .then((data) => {
 
-        setTimeout(() => {
-          
-          { 
-            isMounted.current 
-            &&            
-            setState({
-              loading: false,
-              error: null,
-              data,
-            });
-          }  
-        }, 1000);
+        isMounted.current 
+        &&            
+        setState({
+          loading: false,
+          error: null,
+          data,
+        });
 
       });
 
