@@ -1,11 +1,33 @@
-console.log('Intro reducer')
+console.log("Intro reducer");
 
-const initialState = [{
+const initialState = [
+  {
     id: 1,
-    todo: 'Tarea de ejemplo',
+    todo: "Tarea desde estado inicial",
     done: false,
-}];
+  },
+];
 
-const todoReducer = ( state = initialState, action) => {
-    return state;
-}
+const todoReducer = (state = initialState, action) => {
+  if (action?.type === "add") {
+    return [...state, action.payload];
+  }
+  return state;
+};
+
+let todos = todoReducer();
+
+const newTodo = {
+  id: 2,
+  todo: "Tarea desde newTodo",
+  done: false,
+};
+
+const addTodoAction = {
+  type: "add",
+  payload: newTodo,
+};
+
+todos = todoReducer(todos, addTodoAction);
+
+console.log(todos);
