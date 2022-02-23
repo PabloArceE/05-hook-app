@@ -1,6 +1,17 @@
 body {
     padding: 70px;
-  }
-  input {
+}
+input {
     margin-bottom: 10px;
-  }
+}
+p {
+  margin: 0;
+}
+.list-group-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.completed {
+  text-decoration: line-through;
+}
