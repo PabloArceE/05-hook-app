@@ -54,6 +54,15 @@ export const TodoApp = () => {
     reset();
   };
 
+  const handleToggle = (todoId) => {
+    const action = {
+      type: "toggle",
+      payload: todoId,
+    };
+
+    dispatch(action);
+  };
+
   return (
     <>
       <h1>TodoApp ({todos.length})</h1>
@@ -64,7 +73,10 @@ export const TodoApp = () => {
           <ul className="list-group list-group-flush">
             {todos.map((todo, i) => (
               <li key={todo.id} className="list-group-item list">
-                <p className="text-center fs-4">
+                <p
+                  className={`fs-4 ${todo.done && "completed"}`}
+                  onClick={() => handleToggle(todo.id)}
+                >
                   {i + 1}. {todo.desc}
                 </p>
                 <button
