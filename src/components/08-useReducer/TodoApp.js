@@ -1,27 +1,31 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 
 import todoReducer from "./todoReducer";
-
-import "./styles.css";
 import { useForm } from "../../hooks/useForm";
 
-const initialState = [
-  {
-    id: new Date().getTime(),
-    desc: "Estado inicial",
-    done: false,
-  },
-];
+import "./styles.css";
+
+const init = () => {
+  return JSON.parse(localStorage.getItem("todos")) || [];
+};
 
 export const TodoApp = () => {
-  const [todos, dispatch] = useReducer(todoReducer, initialState);
+  const [todos, dispatch] = useReducer(todoReducer, [], init);
 
-  const [{ description }, handleInputChange] = useForm({
+  const [{ description }, handleInputChange, reset] = useForm({
     description: "",
   });
 
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (description.length <= 2) {
+      return;
+    }
 
     const newTodo = {
       id: new Date().getTime(),
@@ -34,7 +38,20 @@ export const TodoApp = () => {
       payload: newTodo,
     };
 
+    console.log(description);
     dispatch(action);
+    reset();
+    console.log(description);
+  };
+
+  const handleDelete = (todoId) => {
+    const action = {
+      type: "delete",
+      payload: todoId,
+    };
+
+    dispatch(action);
+    reset();
   };
 
   return (
@@ -46,11 +63,18 @@ export const TodoApp = () => {
         <div className="col-7">
           <ul className="list-group list-group-flush">
             {todos.map((todo, i) => (
-              <li key={todo.id} className="list-group-item">
+              <li key={todo.id} className="list-group-item list">
                 <p className="text-center fs-4">
                   {i + 1}. {todo.desc}
                 </p>
-                <button className="btn btn-outline-danger ">X</button>
+                <button
+                  className="btn btn-outline-danger "
+                  onClick={() => {
+                    handleDelete(todo.id);
+                  }}
+                >
+                  X
+                </button>
               </li>
             ))}
           </ul>
@@ -67,6 +91,7 @@ export const TodoApp = () => {
               placeholder="Ingresar tarea"
               autoComplete="off"
               className="form-control"
+              value={description}
               onChange={handleInputChange}
             />
 
