@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const AboutScree = () => {
+const AboutScree = () => {
   return (
     <div>
         <h1>AboutScree</h1>
@@ -9,3 +9,5 @@ export const AboutScree = () => {
     </div>
   )
 }
+
+export default AboutScree

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const HomeScreen = () => {
+const HomeScreen = () => {
   return (
     <div>
         <h1>HomeScreen</h1>
@@ -10,3 +10,5 @@ export const HomeScreen = () => {
     </div>
   )
 }
+
+export default HomeScreen
