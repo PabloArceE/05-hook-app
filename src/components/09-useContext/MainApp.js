@@ -1,23 +1,15 @@
-import React from 'react'
-import { AppRouter } from './AppRouter'
-import { UserContext } from './UserContext'
+import React, { useState } from "react";
+import { AppRouter } from "./AppRouter";
+import { UserContext } from "./UserContext";
 
 export const MainApp = () => {
-
-  const user = {
-    id: 123,
-    name: 'Pablo',
-    data: 'Data content example'
-  }
+  const [user, setUser] = useState("Inicie seción");
 
   return (
-    <div>
-        <UserContext.Provider value={user}>
-          <AppRouter />        
-        </UserContext.Provider>       
-
+    <div className="container">
+      <UserContext.Provider value={{ user, setUser }}>
+        <AppRouter />
+      </UserContext.Provider>
     </div>
-  )
-}
-
-
+  );
+};
